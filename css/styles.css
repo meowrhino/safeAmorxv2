@@ -8,21 +8,37 @@
     box-sizing: border-box;
 }
 
+html {
+    width: 100%;
+    height: 100%;
+}
+
 body {
     font-family: 'BBH Bogle', sans-serif;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
+    position: relative;
+    z-index: 0;
+}
+
+/* fondo fijo siempre en la capa inferior */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
     background-image: url('../assets/images/background.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
 }
 
 /* home: sin scroll */
 body.home-page {
+    height: 100vh;
     overflow: hidden;
 }
 

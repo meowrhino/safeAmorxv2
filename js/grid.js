@@ -16,9 +16,9 @@ const CONFIG = {
 const sections = [
     { name: 'home', url: 'index.html', isHome: true },
     { name: 'about', url: 'about.html', isHome: false },
-    { name: 'cv', url: 'cv.html', isHome: false },
+    { name: 'curriculum', url: 'curriculum.html', isHome: false },
     { name: 'blog', url: 'blog.html', isHome: false },
-    { name: 'hiring', url: 'hiring.html', isHome: false }
+    { name: 'booking', url: 'booking.html', isHome: false }
 ];
 
 // ============================================================================

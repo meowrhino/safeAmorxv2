@@ -17,7 +17,7 @@
 
 :root {
     /* Fuente para encabezados (h1, h2, h3) */
-    --font-headings: 'BBH Bogle', sans-serif;
+    --font-headings: 'Archivo', sans-serif;
     
     /* Fuente para párrafos y texto general */
     /* Opciones disponibles: 'Archivo', 'Montserrat', 'Work Sans', 'Helvetica', 'BBH Bogle' */
@@ -28,7 +28,7 @@
     --color-text-secondary: rgba(255, 255, 255, 0.85);
     
     /* Espaciado */
-    --spacing-section: 3rem;
+    --spacing-section: 4rem;
     --spacing-paragraph: 1.2rem;
     --spacing-title: 2rem;
 }

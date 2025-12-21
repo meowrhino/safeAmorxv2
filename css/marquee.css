@@ -5,7 +5,7 @@
 /* Contenedores de marquee - altura controlada dinámicamente por JS */
 .marquee-top,
 .marquee-bottom {
-    position: fixed;
+    position: absolute;
     left: 0;
     width: 100%;
     overflow: hidden;
@@ -70,6 +70,7 @@
 
 /* Ajustar el contenedor de página - padding controlado dinámicamente por JS */
 .page-container {
+    position: relative;
     min-height: 100vh;
     height: auto;
 }

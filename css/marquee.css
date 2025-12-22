@@ -2,25 +2,32 @@
    MARQUEE STYLES - Logo animado en páginas internas
    ============================================================================ */
 
-/* Contenedores de marquee - altura controlada dinámicamente por JS */
+/* Tamaños base */
+:root {
+    --marquee-height: 22dvh;
+    --marquee-logo-height: 15dvh;
+    --marquee-gap: 1.4vw;
+    --marquee-speed: 120s;
+}
+
+@media (max-width: 768px) {
+    :root {
+        --marquee-height: 24dvh;
+        --marquee-logo-height: 17dvh;
+        --marquee-gap: 2.6vw;
+    }
+}
+
+/* Contenedores de marquee en flujo normal */
 .marquee-top,
 .marquee-bottom {
-    position: absolute;
-    left: 0;
     width: 100%;
+    height: var(--marquee-height);
+    flex: 0 0 var(--marquee-height);
     overflow: hidden;
-    z-index: 1;
     pointer-events: none;
     display: flex;
     align-items: center;
-}
-
-.marquee-top {
-    top: 0;
-}
-
-.marquee-bottom {
-    bottom: 0;
 }
 
 /* Contenedor interno que se anima */
@@ -29,23 +36,27 @@
     align-items: center;
     white-space: nowrap;
     will-change: transform;
+    gap: var(--marquee-gap);
+    padding-inline: var(--marquee-gap);
 }
 
 /* Animación de derecha a izquierda (marquee superior) */
 .marquee-top .marquee-content {
-    animation: marquee-rtl linear infinite;
+    animation: marquee-rtl var(--marquee-speed) linear infinite;
 }
 
 /* Animación de izquierda a derecha (marquee inferior) */
 .marquee-bottom .marquee-content {
-    animation: marquee-ltr linear infinite;
+    animation: marquee-ltr var(--marquee-speed) linear infinite;
 }
 
 /* Logo dentro del marquee - estilos controlados dinámicamente por JS */
 .marquee-logo {
+    height: var(--marquee-logo-height);
     width: auto;
     object-fit: contain;
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+    opacity: 0.9;
 }
 
 /* Keyframes para animación de derecha a izquierda */
@@ -66,11 +77,4 @@
     100% {
         transform: translateX(0);
     }
-}
-
-/* Ajustar el contenedor de página - padding controlado dinámicamente por JS */
-.page-container {
-    position: relative;
-    min-height: 100vh;
-    height: auto;
 }

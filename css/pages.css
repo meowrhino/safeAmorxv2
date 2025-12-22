@@ -1,17 +1,15 @@
 /* Estilos para las páginas internas */
-.page-container {
-    width: 100%;
-    min-height: 100vh;
+body.content-page {
+    min-height: 100dvh;
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: clamp(16px, 3vw, 32px);
-    position: relative;
+    flex-direction: column;
 }
 
 .page-content {
     width: 100%;
-    max-width: 1140px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: clamp(2rem, 4vw, 3.2rem) clamp(1rem, 3vw, 2.2rem) 1.6rem;
     text-align: left;
 }
 
@@ -31,6 +29,7 @@
     padding: 14px 22px;
     display: inline-block;
     margin-top: 24px;
+    margin-bottom: 16px;
     transition: all 0.3s ease;
 }
 
@@ -40,12 +39,9 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .page-container {
-        padding: 14px 12px 20px;
-    }
-
     .page-content {
         max-width: 100%;
+        padding: 1rem 0.8rem 1.2rem;
     }
 
     .page-content h1 {
@@ -54,5 +50,6 @@
 
     .back-link {
         margin-top: 18px;
+        margin-bottom: 12px;
     }
 }

@@ -51,26 +51,24 @@ function renderContent(contentArray, pageType) {
         return;
     }
     
-    // Crear un contenedor para el contenido dinámico
-    const dynamicContent = document.createElement('div');
-    dynamicContent.className = 'dynamic-content';
-    
+    const fragment = document.createDocumentFragment();
+
     // Iterar sobre cada sección del array
     contentArray.forEach((section, index) => {
         const sectionElement = createSection(section, index);
-        dynamicContent.appendChild(sectionElement);
+        fragment.appendChild(sectionElement);
     });
     
-    // Insertar el contenido dinámico después del h1 y antes del back-link
+    // Insertar el contenido dinámico antes del back-link (si existe)
     const h1 = contentContainer.querySelector('h1');
     const backLink = contentContainer.querySelector('.back-link');
     
     if (backLink) {
-        contentContainer.insertBefore(dynamicContent, backLink);
+        contentContainer.insertBefore(fragment, backLink);
     } else if (h1) {
-        h1.after(dynamicContent);
+        h1.after(fragment);
     } else {
-        contentContainer.appendChild(dynamicContent);
+        contentContainer.appendChild(fragment);
     }
 }
 

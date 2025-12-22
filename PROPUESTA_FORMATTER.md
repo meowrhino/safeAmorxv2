@@ -150,24 +150,14 @@ Para cada sección del array, mostrar:
 ## Estructura de Archivos
 
 ```
-formatter/
-├── index.html          # Página principal del formatter
-├── css/
-│   ├── formatter.css   # Estilos del formatter
-│   └── preview.css     # Estilos para vista previa (copia de content.css)
-├── js/
-│   ├── formatter.js    # Lógica principal
-│   ├── editor.js       # Gestión del editor de secciones
-│   ├── preview.js      # Renderizado de vista previa
-│   └── storage.js      # Gestión de LocalStorage y exportación
-└── README.md           # Documentación del formatter
+formatter.html          # Página única con HTML + CSS + JS embebidos
 ```
 
 ## Flujo de Trabajo del Usuario
 
-1. **Abrir el formatter** (`formatter/index.html`)
-2. **Importar** el `data.json` actual (o empezar desde cero)
-3. **Seleccionar categoría** (About, Booking, Curriculum)
+1. **Abrir el formatter** (`formatter.html`)
+2. **Importar** el `data.json` actual (o empezar desde cero) – ahora se carga automáticamente si existe
+3. **Seleccionar categoría** (About, Booking, CV)
 4. **Editar secciones**:
    - Modificar títulos, subtítulos
    - Añadir/editar/eliminar párrafos

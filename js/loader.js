@@ -1,7 +1,7 @@
 /**
  * loader.js - Sistema de carga dinámica de contenido desde data.json
  * 
- * Este script carga el contenido de las páginas (about, booking, curriculum)
+ * Este script carga el contenido de las páginas (about, booking, cv)
  * desde un archivo JSON y lo inyecta dinámicamente en el HTML.
  */
 
@@ -9,7 +9,7 @@
 async function initContentLoader() {
     try {
         // Cargar el data.json
-        const response = await fetch('../data.json');
+        const response = await fetch('data.json');
         if (!response.ok) {
             throw new Error(`Error al cargar data.json: ${response.status}`);
         }
@@ -36,7 +36,7 @@ function detectPageType() {
     
     if (title.includes('about')) return 'about';
     if (title.includes('booking')) return 'booking';
-    if (title.includes('curriculum') || title.includes('cv')) return 'curriculum';
+    if (title.includes('curriculum') || title.includes('cv')) return 'cv';
     
     return null;
 }
@@ -65,7 +65,7 @@ function renderContent(contentArray, pageType) {
     const h1 = contentContainer.querySelector('h1');
     const backLink = contentContainer.querySelector('.back-link');
     
-    if (h1 && backLink) {
+    if (backLink) {
         contentContainer.insertBefore(dynamicContent, backLink);
     } else if (h1) {
         h1.after(dynamicContent);

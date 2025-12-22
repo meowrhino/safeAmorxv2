@@ -10,28 +10,28 @@ const MARQUEE_CONFIG = {
     logoCount: 20,
     
     // espaciado entre logos (valores CSS: px, vw, rem, etc.)
-    logoSpacing: '2vw',
+    logoSpacing: '1.6vw',
     
     // opacidad de los logos (0.0 = invisible, 1.0 = completamente visible)
     opacity: 0.9,
     
     // altura de cada logo (valores CSS: vh, px, rem, etc.)
-    logoHeight: '15vh',
+    logoHeight: '18vh',
     
     // altura del contenedor del marquee (debe ser >= logoHeight para evitar cortes)
-    containerHeight: '20vh',
+    containerHeight: '23vh',
     
     // duración de la animación en segundos (más alto = más lento)
     animationDuration: 120,
     
     // altura del contenedor en móviles
-    containerHeightMobile: '15vh',
+    containerHeightMobile: '17vh',
     
     // altura del logo en móviles
-    logoHeightMobile: '10vh',
+    logoHeightMobile: '14vh',
     
     // espaciado entre logos en móviles
-    logoSpacingMobile: '6vw'
+    logoSpacingMobile: '4vw'
 };
 
 // ============================================================================
@@ -103,8 +103,12 @@ function applyDynamicStyles() {
         }
         
         .page-container {
-            padding-top: calc(${MARQUEE_CONFIG.containerHeight} + 20px);
-            padding-bottom: calc(${MARQUEE_CONFIG.containerHeight} + 20px);
+            padding-top: calc(${MARQUEE_CONFIG.containerHeight} + 60px);
+            padding-bottom: calc(${MARQUEE_CONFIG.containerHeight} + 24px);
+        }
+
+        .back-link {
+            z-index: 3;
         }
         
         /* responsive: móviles */
@@ -120,9 +124,10 @@ function applyDynamicStyles() {
             }
             
             .page-container {
-                padding-top: calc(${MARQUEE_CONFIG.containerHeightMobile} + 20px);
-                padding-bottom: calc(${MARQUEE_CONFIG.containerHeightMobile} + 20px);
+                padding-top: calc(${MARQUEE_CONFIG.containerHeightMobile} + 32px);
+                padding-bottom: calc(${MARQUEE_CONFIG.containerHeightMobile} + 24px);
             }
+
         }
     `;
     

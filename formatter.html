@@ -50,6 +50,10 @@
     .form-input:focus, .form-textarea:focus { outline: none; border-color: var(--color-strong); box-shadow: 0 0 0 2px rgba(15, 12, 10, 0.08); }
     .form-textarea { min-height: 80px; resize: vertical; }
     .paragraph-list, .logo-list { display: flex; flex-direction: column; gap: 10px; }
+    .block-list { display: flex; flex-direction: column; gap: 12px; }
+    .block-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 10px; padding: 12px; }
+    .block-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .block-label { font-size: 0.9rem; color: var(--color-muted); }
     .paragraph-item, .logo-item { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 10px; padding: 12px; }
     .paragraph-header, .logo-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
     .paragraph-label, .logo-label { font-size: 0.9rem; color: var(--color-muted); }
@@ -76,9 +80,11 @@
     .preview-section p { color: var(--color-text); margin-bottom: 10px; }
     .preview-logos { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
     .preview-logo { border: 1px solid var(--color-border); border-radius: 8px; padding: 6px 10px; background: var(--color-soft); color: var(--color-muted); font-size: 0.95rem; }
-    .formatter-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 32px 28px; border-top: 1px solid var(--color-border); background: var(--color-bg); flex-wrap: wrap; }
+    .formatter-footer { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; padding: 16px 32px 28px; border-top: 1px solid var(--color-border); background: var(--color-bg); }
     .footer-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-    .status-message { min-height: 1.2em; color: var(--color-muted); }
+    .footer-actions.footer-left { justify-content: flex-start; }
+    .footer-actions.footer-center { justify-content: center; }
+    .status-message { min-height: 1.2em; color: var(--color-muted); justify-self: end; }
     .status-message.success { color: #1f7a4c; }
     .status-message.error { color: #c0392b; }
     .status-message.warning { color: #c28418; }
@@ -92,6 +98,10 @@
       .tabs { padding: 0 20px 14px; }
       .formatter-main { padding: 20px; gap: 18px; }
       .panel-header { flex-direction: column; align-items: flex-start; }
+      .formatter-footer { grid-template-columns: 1fr; justify-items: center; }
+      .footer-actions.footer-left,
+      .footer-actions.footer-center { justify-content: center; }
+      .status-message { justify-self: center; }
     }
   </style>
 </head>
@@ -100,9 +110,6 @@
     <div class="title-block">
       <p class="eyebrow">safe amorx</p>
       <h1>editor de contenido</h1>
-    </div>
-    <div class="header-actions">
-      <button id="togglePreviewBtn" class="btn ghost btn-small" title="Ocultar o mostrar la vista previa">Ocultar vista previa</button>
     </div>
   </header>
 
@@ -130,19 +137,18 @@
           <p class="eyebrow">vista previa</p>
           <h2>Contenido</h2>
         </div>
-        <div class="panel-actions">
-          <button id="copyJsonBtn" class="btn ghost btn-small">Copiar JSON</button>
-        </div>
       </div>
       <div id="previewContainer" class="preview-container"></div>
     </section>
   </main>
 
   <footer class="formatter-footer">
-    <div class="footer-actions">
+    <div class="footer-actions footer-left">
       <button id="saveBtn" class="btn ghost">Guardar local</button>
+    </div>
+    <div class="footer-actions footer-center">
+      <button id="copyJsonBtn" class="btn ghost">Copiar JSON</button>
       <button id="downloadBtn" class="btn solid">Descargar data.json</button>
-      <button id="resetBtn" class="btn ghost">Resetear todo</button>
     </div>
     <span class="status-message" id="statusMessage"></span>
   </footer>
@@ -253,8 +259,28 @@
           data.cv = data.curriculum;
           delete data.curriculum;
         }
+        const normalizeSection = (section) => {
+          if (!section || typeof section !== 'object') {
+            return { titulo: '', bloques: [{ subtitulo: '', texto: [] }] };
+          }
+          const normalized = { ...section };
+          if (!Array.isArray(normalized.bloques)) {
+            const subtitulo = typeof normalized.subtitulo === 'string' ? normalized.subtitulo : '';
+            const texto = Array.isArray(normalized.texto) ? normalized.texto : [];
+            normalized.bloques = [{ subtitulo, texto }];
+            delete normalized.subtitulo;
+            delete normalized.texto;
+          } else {
+            normalized.bloques = normalized.bloques.map(block => ({
+              subtitulo: typeof block.subtitulo === 'string' ? block.subtitulo : '',
+              texto: Array.isArray(block.texto) ? block.texto : []
+            }));
+          }
+          return normalized;
+        };
         ['about', 'booking', 'cv'].forEach((category) => {
           if (!Array.isArray(data[category])) data[category] = [];
+          data[category] = data[category].map(normalizeSection);
         });
         return data;
       },
@@ -307,29 +333,22 @@
           div.appendChild(h2);
         }
 
-        if (Array.isArray(section.subtitulo)) {
-          section.subtitulo
-            .filter(sub => typeof sub === 'string' && sub.trim())
-            .forEach(sub => {
-              const h3 = document.createElement('h3');
-              h3.textContent = sub;
-              div.appendChild(h3);
-            });
-        } else if (section.subtitulo) {
-          const h3 = document.createElement('h3');
-          h3.textContent = section.subtitulo;
-          div.appendChild(h3);
-        }
+        const blocks = this.normalizeBlocks(section);
+        blocks.forEach(block => {
+          if (block.subtitulo && block.subtitulo.trim()) {
+            const h3 = document.createElement('h3');
+            h3.textContent = block.subtitulo;
+            div.appendChild(h3);
+          }
 
-        if (section.texto && Array.isArray(section.texto)) {
-          section.texto.forEach(parrafo => {
-            if (parrafo.trim()) {
+          block.texto.forEach(parrafo => {
+            if (typeof parrafo === 'string' && parrafo.trim()) {
               const p = document.createElement('p');
               p.textContent = parrafo;
               div.appendChild(p);
             }
           });
-        }
+        });
 
         if (section.logos && Array.isArray(section.logos) && section.logos.length > 0) {
           const logosDiv = document.createElement('div');
@@ -347,6 +366,24 @@
           div.appendChild(logosDiv);
         }
         return div;
+      },
+
+      normalizeBlocks(section) {
+        if (Array.isArray(section.bloques)) {
+          return section.bloques.map(block => ({
+            subtitulo: typeof block.subtitulo === 'string' ? block.subtitulo : '',
+            texto: Array.isArray(block.texto)
+              ? block.texto
+              : (typeof block.texto === 'string' ? [block.texto] : [])
+          }));
+        }
+
+        const subtitulo = typeof section.subtitulo === 'string' ? section.subtitulo : '';
+        const texto = Array.isArray(section.texto)
+          ? section.texto
+          : (typeof section.texto === 'string' ? [section.texto] : []);
+
+        return [{ subtitulo, texto }];
       },
 
       clear() {
@@ -401,8 +438,7 @@
         card.appendChild(header);
 
         card.appendChild(this.createFormGroup('Título (H2)', 'text', section.titulo || '', (value) => this.updateSection(index, 'titulo', value)));
-        card.appendChild(this.createSubtitlesGroup(section, index));
-        card.appendChild(this.createParagraphsGroup(section.texto || [], index));
+        card.appendChild(this.createBlocksGroup(section, index));
         card.appendChild(this.createLogosGroup(section.logos || [], index));
         return card;
       },
@@ -424,52 +460,59 @@
         return group;
       },
 
-      createSubtitlesGroup(section, sectionIndex) {
-        const subtitles = this.normalizeSubtitles(section);
+      createBlocksGroup(section, sectionIndex) {
+        const blocks = this.normalizeBlocks(section);
         const group = document.createElement('div');
         group.className = 'form-group';
         const label = document.createElement('label');
         label.className = 'form-label optional';
-        label.textContent = 'Subtítulos (H3)';
+        label.textContent = 'Bloques (H3 + párrafos)';
         group.appendChild(label);
 
         const list = document.createElement('div');
-        list.className = 'paragraph-list';
-        subtitles.forEach((subtitle, sIndex) => {
-          const item = this.createSubtitleItem(subtitle, sectionIndex, sIndex);
+        list.className = 'block-list';
+        blocks.forEach((block, blockIndex) => {
+          const item = this.createBlockCard(block, sectionIndex, blockIndex);
           list.appendChild(item);
         });
         group.appendChild(list);
-
-        const addBtn = document.createElement('button');
-        addBtn.className = 'btn btn-add';
-        addBtn.textContent = '+ Añadir subtítulo';
-        addBtn.onclick = () => this.addSubtitle(sectionIndex);
-        group.appendChild(addBtn);
         return group;
       },
 
-      createSubtitleItem(subtitle, sectionIndex, sIndex) {
-        const item = document.createElement('div');
-        item.className = 'paragraph-item';
-        const header = document.createElement('div');
-        header.className = 'paragraph-header';
-        header.innerHTML = `
-          <span class="paragraph-label">Subtítulo ${sIndex + 1}</span>
-          <button class="btn btn-icon btn-small" onclick="Editor.deleteSubtitle(${sectionIndex}, ${sIndex})" title="Eliminar subtítulo">🗑️</button>
-        `;
-        item.appendChild(header);
+      createBlockCard(block, sectionIndex, blockIndex) {
+        const card = document.createElement('div');
+        card.className = 'block-card';
 
-        const input = document.createElement('input');
-        input.className = 'form-input';
-        input.type = 'text';
-        input.value = subtitle;
-        input.addEventListener('input', (e) => this.updateSubtitle(sectionIndex, sIndex, e.target.value));
-        item.appendChild(input);
-        return item;
+        const header = document.createElement('div');
+        header.className = 'block-header';
+        header.innerHTML = `
+          <span class="block-label">Bloque ${blockIndex + 1}</span>
+          <button class="btn btn-icon btn-small" onclick="Editor.deleteBlock(${sectionIndex}, ${blockIndex})" title="Eliminar bloque">🗑️</button>
+        `;
+        card.appendChild(header);
+
+        card.appendChild(
+          this.createFormGroup(
+            'Subtítulo (H3)',
+            'text',
+            block.subtitulo || '',
+            (value) => this.updateSubtitle(sectionIndex, blockIndex, value),
+            true
+          )
+        );
+
+        card.appendChild(this.createParagraphsGroup(block.texto || [], sectionIndex, blockIndex));
+
+        const addBlockBtn = document.createElement('button');
+        addBlockBtn.className = 'btn btn-add';
+        addBlockBtn.textContent = '+ Añadir subtítulo';
+        addBlockBtn.onclick = () => this.addBlock(sectionIndex, blockIndex);
+        card.appendChild(addBlockBtn);
+
+        return card;
       },
 
-      createParagraphsGroup(paragraphs, sectionIndex) {
+      createParagraphsGroup(paragraphs, sectionIndex, blockIndex) {
         const group = document.createElement('div');
         group.className = 'form-group';
         const label = document.createElement('label');
@@ -480,34 +523,34 @@
         const list = document.createElement('div');
         list.className = 'paragraph-list';
         paragraphs.forEach((paragraph, pIndex) => {
-          const item = this.createParagraphItem(paragraph, sectionIndex, pIndex);
+          const item = this.createParagraphItem(paragraph, sectionIndex, blockIndex, pIndex);
           list.appendChild(item);
         });
         group.appendChild(list);
 
         const addBtn = document.createElement('button');
         addBtn.className = 'btn btn-add';
-        addBtn.textContent = '+ Añadir Párrafo';
-        addBtn.onclick = () => this.addParagraph(sectionIndex);
+        addBtn.textContent = '+ Añadir párrafo';
+        addBtn.onclick = () => this.addParagraph(sectionIndex, blockIndex);
         group.appendChild(addBtn);
         return group;
       },
 
-      createParagraphItem(paragraph, sectionIndex, pIndex) {
+      createParagraphItem(paragraph, sectionIndex, blockIndex, pIndex) {
         const item = document.createElement('div');
         item.className = 'paragraph-item';
         const header = document.createElement('div');
         header.className = 'paragraph-header';
         header.innerHTML = `
           <span class="paragraph-label">Párrafo ${pIndex + 1}</span>
-          <button class="btn btn-icon btn-small" onclick="Editor.deleteParagraph(${sectionIndex}, ${pIndex})" title="Eliminar párrafo">🗑️</button>
+          <button class="btn btn-icon btn-small" onclick="Editor.deleteParagraph(${sectionIndex}, ${blockIndex}, ${pIndex})" title="Eliminar párrafo">🗑️</button>
         `;
         item.appendChild(header);
 
         const textarea = document.createElement('textarea');
         textarea.className = 'form-textarea';
         textarea.value = paragraph;
-        textarea.addEventListener('input', (e) => this.updateParagraph(sectionIndex, pIndex, e.target.value));
+        textarea.addEventListener('input', (e) => this.updateParagraph(sectionIndex, blockIndex, pIndex, e.target.value));
         item.appendChild(textarea);
         return item;
       },
@@ -583,11 +626,6 @@
         this.triggerUpdate();
       },
 
-      updateParagraph(sectionIndex, pIndex, value) {
-        this.data[this.currentCategory][sectionIndex].texto[pIndex] = value;
-        this.triggerUpdate();
-      },
-
       updateLogo(sectionIndex, lIndex, field, value) {
         if (!this.data[this.currentCategory][sectionIndex].logos) {
           this.data[this.currentCategory][sectionIndex].logos = [];
@@ -596,34 +634,44 @@
         this.triggerUpdate();
       },
 
-      normalizeSubtitles(section) {
-        if (Array.isArray(section.subtitulo)) return section.subtitulo;
-        if (typeof section.subtitulo === 'string' && section.subtitulo.trim()) {
-          section.subtitulo = [section.subtitulo];
-        } else {
-          section.subtitulo = [];
+      normalizeBlocks(section) {
+        if (!Array.isArray(section.bloques) || section.bloques.length === 0) {
+          const subtitulo = typeof section.subtitulo === 'string' ? section.subtitulo : '';
+          const texto = Array.isArray(section.texto) ? section.texto : [];
+          section.bloques = [{ subtitulo, texto }];
+          delete section.subtitulo;
+          delete section.texto;
         }
-        return section.subtitulo;
+
+        section.bloques = section.bloques.map(block => ({
+          subtitulo: typeof block.subtitulo === 'string' ? block.subtitulo : '',
+          texto: Array.isArray(block.texto) ? block.texto : []
+        }));
+
+        if (section.bloques.length === 0) {
+          section.bloques.push({ subtitulo: '', texto: [] });
+        }
+
+        return section.bloques;
       },
 
-      updateSubtitle(sectionIndex, subtitleIndex, value) {
+      updateSubtitle(sectionIndex, blockIndex, value) {
         const section = this.data[this.currentCategory][sectionIndex];
-        const subtitles = this.normalizeSubtitles(section);
-        subtitles[subtitleIndex] = value;
+        const blocks = this.normalizeBlocks(section);
+        blocks[blockIndex].subtitulo = value;
+        this.triggerUpdate();
+      },
+
+      updateParagraph(sectionIndex, blockIndex, pIndex, value) {
+        const section = this.data[this.currentCategory][sectionIndex];
+        const blocks = this.normalizeBlocks(section);
+        blocks[blockIndex].texto[pIndex] = value;
         this.triggerUpdate();
       },
 
       addSection() {
-        const newSection = { titulo: '', texto: [] };
+        const newSection = { titulo: '', bloques: [{ subtitulo: '', texto: [] }] };
         this.data[this.currentCategory].push(newSection);
-        this.renderCategory(this.currentCategory);
-        this.triggerUpdate();
-      },
-
-      addSubtitle(sectionIndex) {
-        const section = this.data[this.currentCategory][sectionIndex];
-        const subtitles = this.normalizeSubtitles(section);
-        subtitles.push('');
         this.renderCategory(this.currentCategory);
         this.triggerUpdate();
       },
@@ -645,25 +693,35 @@
         this.triggerUpdate();
       },
 
-      addParagraph(sectionIndex) {
-        if (!this.data[this.currentCategory][sectionIndex].texto) {
-          this.data[this.currentCategory][sectionIndex].texto = [];
-        }
-        this.data[this.currentCategory][sectionIndex].texto.push('');
-        this.renderCategory(this.currentCategory);
-        this.triggerUpdate();
-      },
-
-      deleteSubtitle(sectionIndex, subtitleIndex) {
+      addBlock(sectionIndex, afterBlockIndex) {
         const section = this.data[this.currentCategory][sectionIndex];
-        const subtitles = this.normalizeSubtitles(section);
-        subtitles.splice(subtitleIndex, 1);
+        const blocks = this.normalizeBlocks(section);
+        const insertAt = Math.min(afterBlockIndex + 1, blocks.length);
+        blocks.splice(insertAt, 0, { subtitulo: '', texto: [] });
         this.renderCategory(this.currentCategory);
         this.triggerUpdate();
       },
 
-      deleteParagraph(sectionIndex, pIndex) {
-        this.data[this.currentCategory][sectionIndex].texto.splice(pIndex, 1);
+      deleteBlock(sectionIndex, blockIndex) {
+        const section = this.data[this.currentCategory][sectionIndex];
+        const blocks = this.normalizeBlocks(section);
+        blocks.splice(blockIndex, 1);
+        this.renderCategory(this.currentCategory);
+        this.triggerUpdate();
+      },
+
+      addParagraph(sectionIndex, blockIndex) {
+        const section = this.data[this.currentCategory][sectionIndex];
+        const blocks = this.normalizeBlocks(section);
+        blocks[blockIndex].texto.push('');
+        this.renderCategory(this.currentCategory);
+        this.triggerUpdate();
+      },
+
+      deleteParagraph(sectionIndex, blockIndex, pIndex) {
+        const section = this.data[this.currentCategory][sectionIndex];
+        const blocks = this.normalizeBlocks(section);
+        blocks[blockIndex].texto.splice(pIndex, 1);
         this.renderCategory(this.currentCategory);
         this.triggerUpdate();
       },
@@ -694,8 +752,6 @@
     const Formatter = {
       currentCategory: 'about',
       data: null,
-      previewVisible: true,
-      autosaveTimer: null,
       statusTimer: null,
 
       async init() {
@@ -747,8 +803,6 @@
 
         document.getElementById('saveBtn').addEventListener('click', () => this.saveProgress());
         document.getElementById('downloadBtn').addEventListener('click', () => this.downloadData());
-        document.getElementById('resetBtn').addEventListener('click', () => this.resetData());
-        document.getElementById('togglePreviewBtn').addEventListener('click', () => this.togglePreview());
 
         const copyBtn = document.getElementById('copyJsonBtn');
         if (copyBtn) copyBtn.addEventListener('click', () => this.copyJson());
@@ -779,14 +833,7 @@
       onDataChange() {
         Preview.render(this.data[this.currentCategory]);
         this.updateCounts();
-        this.scheduleAutosave();
-      },
-
-      scheduleAutosave() {
-        clearTimeout(this.autosaveTimer);
-        this.autosaveTimer = setTimeout(() => {
-          Storage.save(this.data);
-        }, 400);
+        Storage.save(this.data);
       },
 
       saveProgress() {
@@ -812,19 +859,6 @@
           this.switchCategory(this.currentCategory);
           this.updateCounts();
           this.showStatus('Contenido reseteado', 'success');
-        }
-      },
-
-      togglePreview() {
-        this.previewVisible = !this.previewVisible;
-        const previewPanel = document.querySelector('.preview-panel');
-        const btn = document.getElementById('togglePreviewBtn');
-        if (this.previewVisible) {
-          previewPanel.style.display = '';
-          btn.textContent = 'Ocultar vista previa';
-        } else {
-          previewPanel.style.display = 'none';
-          btn.textContent = 'Mostrar vista previa';
         }
       },
 

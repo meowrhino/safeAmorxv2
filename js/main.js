@@ -503,23 +503,24 @@
         }
     }
 
-    function appendSubtitles(section, container) {
-        if (Array.isArray(section.subtitulo)) {
-            section.subtitulo
-                .filter(sub => typeof sub === 'string' && sub.trim())
-                .forEach(sub => {
-                    const h3 = document.createElement('h3');
-                    h3.textContent = sub;
-                    container.appendChild(h3);
-                });
-            return;
+    function normalizeBlocks(section) {
+        if (Array.isArray(section.bloques)) {
+            return section.bloques.map(block => ({
+                subtitulo: typeof block.subtitulo === 'string' ? block.subtitulo : '',
+                texto: Array.isArray(block.texto)
+                    ? block.texto
+                    : (typeof block.texto === 'string' ? [block.texto] : [])
+            }));
         }
 
-        if (section.subtitulo) {
-            const h3 = document.createElement('h3');
-            h3.textContent = section.subtitulo;
-            container.appendChild(h3);
-        }
+        const subtitulo = Array.isArray(section.subtitulo)
+            ? (section.subtitulo.find(sub => typeof sub === 'string' && sub.trim()) || '')
+            : (typeof section.subtitulo === 'string' ? section.subtitulo : '');
+        const texto = Array.isArray(section.texto)
+            ? section.texto
+            : (typeof section.texto === 'string' ? [section.texto] : []);
+
+        return [{ subtitulo, texto }];
     }
 
     function createSection(section, index) {
@@ -533,17 +534,22 @@
             sectionDiv.appendChild(h2);
         }
 
-        appendSubtitles(section, sectionDiv);
+        const blocks = normalizeBlocks(section);
+        blocks.forEach(block => {
+            if (block.subtitulo && block.subtitulo.trim()) {
+                const h3 = document.createElement('h3');
+                h3.textContent = block.subtitulo;
+                sectionDiv.appendChild(h3);
+            }
 
-        if (section.texto && Array.isArray(section.texto) && section.texto.length > 0) {
-            section.texto.forEach(parrafo => {
+            block.texto.forEach(parrafo => {
                 const trimmed = typeof parrafo === 'string' ? parrafo.trim() : '';
                 if (!trimmed) return;
                 const p = document.createElement('p');
                 p.textContent = parrafo;
                 sectionDiv.appendChild(p);
             });
-        }
+        });
 
         if (section.logos && Array.isArray(section.logos) && section.logos.length > 0) {
             const logosContainer = document.createElement('div');

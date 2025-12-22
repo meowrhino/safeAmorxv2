@@ -15,8 +15,9 @@ Sitio web de Safe Amorx con navegación en grid, contenido dinámico desde `data
 - Claves: `about`, `booking`, `cv`, cada una es un array de secciones.
 - Estructura de sección:
   - `titulo` (h2)
-  - `subtitulo` (h3, opcional; puede ser string o array para múltiples h3)
-  - `texto` (array de párrafos, obligatorio aunque sea vacío)
+  - `bloques` (array de bloques con `subtitulo` + `texto`)
+    - `subtitulo` (h3, opcional)
+    - `texto` (array de párrafos)
   - `logos` (array opcional con `src`, `link`, `alt`)
 - `js/main.js` detecta la página (about/booking/cv), carga `data.json` y pinta h2/h3/p/logos dentro de `.page-content`.
 
@@ -43,5 +44,6 @@ Sitio web de Safe Amorx con navegación en grid, contenido dinámico desde `data
 
 ## Notas de desarrollo
 - El loader tolera JSONs con `curriculum` y los migra a `cv` automáticamente.
+- Si una sección no tiene `bloques`, el loader la trata como un único bloque con `subtitulo` + `texto`.
 - El home link en páginas internas está en el flujo del contenido, debajo del texto.
 - Evita modificar rutas/archivos sin actualizar los enlaces en `js/main.js`.

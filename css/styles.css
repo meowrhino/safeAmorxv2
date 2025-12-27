@@ -133,7 +133,7 @@ body.home-page {
 }
 
 .grid-cell.home .section-label {
-    color: #00ff88;
+    color: var(--map-text-color);
     font-family: Helvetica, Arial, sans-serif;
     font-size: 1rem;
     font-weight: 700;
@@ -157,7 +157,7 @@ body.home-page {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    color: #00ff88;
+    color: var(--map-text-color);
     font-family: Helvetica, Arial, sans-serif;
     font-size: clamp(0.7rem, 1.5vw, 1.1rem);
     font-weight: 700;
@@ -178,8 +178,8 @@ body.home-page {
 
 /* configuración general de tuberías */
 .grid-cell.pipe {
-    --pipe-stroke: 5px;
-    --pipe-color: #444;
+    --pipe-stroke: var(--map-stroke);
+    --pipe-color: var(--map-line-color);
     --pipe-half: calc(var(--pipe-stroke) / 2);
     --pipe-fill: linear-gradient(var(--pipe-color), var(--pipe-color));
     /* Usar opacity en vez de rgba evita que en cruces/T/esquinas se "sume" alpha
@@ -338,7 +338,7 @@ body.home-page {
     }
     
     .grid-cell.pipe {
-        --pipe-stroke: 3px;
+        --map-stroke: 3px;
     }
 }
 
@@ -366,6 +366,10 @@ body.home-page {
     /* Colores del texto */
     --color-text-primary: #fff;
     --color-text-secondary: #ccc;
+    /* Mapa (home) */
+    --map-text-color: #00ff88;
+    --map-line-color: #444;
+    --map-stroke: 5px;
     /* Espaciado */
     --spacing-section: 3.5rem;
     --spacing-paragraph: 1.1rem;
@@ -383,8 +387,8 @@ body.home-page {
 
 .content-section h2 {
     font-family: var(--font-headings);
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
-    font-weight: 700;
+    font-size: 4rem;
+    font-weight: 300;
     color: var(--color-text-primary);
     margin-bottom: 1.5rem;
     text-align: left;
@@ -459,6 +463,7 @@ body.content-page {
         --spacing-paragraph: 0.95rem;
         --spacing-paragraph-break: 1.6rem;
         --spacing-title: 1.3rem;
+        --map-stroke: 3px;
     }
 
     .content-section h3 {
@@ -492,6 +497,7 @@ body.content-page {
     margin-block: 50dvh;
     padding: clamp(2rem, 4vw, 3.2rem) clamp(1rem, 3vw, 2.2rem) 1.6rem;
     text-align: left;
+    position: relative;
 }
 
 .page-content h1 {
@@ -505,20 +511,34 @@ body.content-page {
 
 .back-link {
     font-family: var(--font-paragraphs);
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    color: #ffffff;
+    font-size: clamp(1.2rem, 2.8vw, 1.7rem);
+    color: var(--map-text-color);
     text-decoration: none;
     padding: 0;
-    display: block;
-    width: 100%;
-    text-align: right;
-    margin-top: 0;
-    margin-bottom: 0;
+    position: absolute;
+    left: 50%;
+    bottom: -50dvh;
+    transform: translate(-50%, 0);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0;
     transition: all 0.3s ease;
 }
 
+.back-link::after {
+    content: '';
+    display: block;
+    width: var(--map-stroke);
+    height: 15dvh;
+    margin: 0.8rem auto 0;
+    background: var(--map-line-color);
+    border-radius: 999px;
+}
+
 .back-link:hover {
-    transform: translateY(-2px);
+    transform: translate(-50%, -6px);
 }
 
 @media (max-width: 768px) {

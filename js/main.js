@@ -77,11 +77,22 @@
     async function loadSections() {
         try {
             const response = await fetch('data.json', { cache: 'no-cache' });
-            if (!response.ok) throw new Error(`Respuesta ${response.status}`);
+            if (!response.ok) {
+                const errorMsg = response.status === 404 
+                    ? 'data.json no encontrado'
+                    : response.status >= 500
+                    ? 'Error del servidor al cargar data.json'
+                    : `Error HTTP ${response.status} al cargar data.json`;
+                throw new Error(errorMsg);
+            }
             const data = await response.json();
             return buildSectionsFromData(data);
         } catch (error) {
-            console.warn('No se pudo cargar data.json para el grid:', error);
+            if (error instanceof SyntaxError) {
+                console.error('data.json contiene JSON inválido:', error);
+            } else {
+                console.warn('No se pudo cargar data.json para el grid:', error.message);
+            }
             return buildSectionsFromData(null);
         }
     }
@@ -484,9 +495,25 @@
         wrappers.forEach(setParagraphsMaxHeight);
     }
 
-    function scheduleCollapsibleHeightsRefresh() {
-        clearTimeout(collapseResizeTimeout);
-        collapseResizeTimeout = setTimeout(() => updateCollapsibleHeights(), COLLAPSE_RESIZE_DEBOUNCE_MS);
+    let resizeObserver = null;
+
+    function setupResizeObserver(contentContainer) {
+        // Limpiar observer anterior si existe
+        if (resizeObserver) {
+            resizeObserver.disconnect();
+        }
+
+        // Crear nuevo ResizeObserver con debounce
+        let resizeTimeout;
+        resizeObserver = new ResizeObserver(() => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                updateCollapsibleHeights(contentContainer);
+            }, COLLAPSE_RESIZE_DEBOUNCE_MS);
+        });
+
+        // Observar el contenedor principal
+        resizeObserver.observe(contentContainer);
     }
 
     async function initContentLoader() {
@@ -499,16 +526,29 @@
         try {
             const response = await fetch('data.json');
             if (!response.ok) {
-                throw new Error(`Error al cargar data.json: ${response.status}`);
+                const errorMsg = response.status === 404
+                    ? 'data.json no encontrado'
+                    : response.status >= 500
+                    ? 'Error del servidor al cargar data.json'
+                    : `Error HTTP ${response.status} al cargar data.json`;
+                throw new Error(errorMsg);
             }
 
             const data = await response.json();
             const contentArray = Array.isArray(data?.[pageType]) ? data[pageType] : [];
             renderContent(contentArray, pageType);
             requestAnimationFrame(() => updateCollapsibleHeights(contentContainer));
-            window.addEventListener('resize', scheduleCollapsibleHeightsRefresh);
+            
+            // Usar ResizeObserver en lugar de window.resize
+            setupResizeObserver(contentContainer);
         } catch (error) {
-            console.error('Error al inicializar el loader:', error);
+            if (error instanceof SyntaxError) {
+                console.error('data.json contiene JSON inválido:', error);
+            } else {
+                console.error('Error al inicializar el loader:', error.message);
+            }
+            // Mostrar placeholder si falla la carga
+            renderContent([], pageType);
         }
     }
 

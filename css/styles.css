@@ -656,9 +656,6 @@ body.content-page[data-category="blog"] .content-section:last-child {
 
 .back-link:focus-visible {
   --home-shift: 8px;
-}
-
-.back-link:focus-visible {
   outline: 2px solid var(--map-text-color);
   outline-offset: 4px;
 }

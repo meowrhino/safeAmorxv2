@@ -1638,7 +1638,7 @@
         // Control de sangría
         header.appendChild(
           this.createIndentControl(
-            block.sangria || 0,
+            block.sangria !== undefined && block.sangria !== null ? block.sangria : 0,
             (value) => this.updateBlockIndent(sectionIndex, blockIndex, value)
           )
         );
@@ -1738,6 +1738,17 @@
 
         const actions = document.createElement('div');
         actions.className = 'paragraph-actions';
+
+        // Botón añadir link
+        const linkBtn = document.createElement('button');
+        linkBtn.className = 'btn btn-icon btn-small';
+        linkBtn.title = 'Añadir enlace al texto seleccionado';
+        linkBtn.textContent = '🔗';
+        linkBtn.addEventListener('click', () => {
+          const textarea = item.querySelector('.form-textarea');
+          this.addLinkToParagraph(sectionIndex, blockIndex, pIndex, textarea);
+        });
+        actions.appendChild(linkBtn);
 
         // Botón mover arriba
         const moveUpBtn = document.createElement('button');
@@ -2095,6 +2106,42 @@
         [paragraphs[pIndex], paragraphs[newIndex]] = [paragraphs[newIndex], paragraphs[pIndex]];
         this.renderCategory(this.currentCategory);
         this.triggerUpdate();
+      },
+
+      /**
+       * Añade un enlace al texto seleccionado en un párrafo
+       */
+      addLinkToParagraph(sectionIndex, blockIndex, pIndex, textarea) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selectedText = textarea.value.substring(start, end);
+
+        // Verificar que hay texto seleccionado
+        if (!selectedText || selectedText.trim() === '') {
+          alert('⚠️ Por favor, selecciona el texto al que quieres añadir un enlace.');
+          return;
+        }
+
+        // Pedir la URL
+        const url = prompt('🔗 Introduce la URL del enlace:', 'https://');
+        if (!url || url.trim() === '' || url === 'https://') {
+          return; // Usuario canceló o no introdujo URL
+        }
+
+        // Crear el enlace en formato HTML
+        const link = `<a href="${url.trim()}" target="_blank">${selectedText}</a>`;
+
+        // Reemplazar el texto seleccionado con el enlace
+        const newValue = textarea.value.substring(0, start) + link + textarea.value.substring(end);
+        textarea.value = newValue;
+
+        // Actualizar el párrafo en los datos
+        this.updateParagraph(sectionIndex, blockIndex, pIndex, newValue);
+
+        // Colocar el cursor después del enlace insertado
+        const newCursorPos = start + link.length;
+        textarea.setSelectionRange(newCursorPos, newCursorPos);
+        textarea.focus();
       },
 
       /**

@@ -612,7 +612,7 @@ body.content-page {
   font-size: clamp(1.2rem, 2.8vw, 1.7rem);
   color: var(--map-text-color);
   text-decoration: none;
-  padding: 0 0 1.2rem;
+  padding: 0 0 2rem;
   position: absolute;
   left: 50%;
   bottom: -50dvh;
@@ -620,8 +620,18 @@ body.content-page {
   transform: translate(-50%, 0) translateX(var(--home-shift));
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   margin: 0;
   transition: transform 0.35s ease;
+}
+
+.back-link-logo {
+  max-width: 180px;
+  max-height: 80px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
 }
 
 .back-link:hover,
@@ -635,23 +645,26 @@ body.content-page {
 }
 
 .about-web-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 2.6rem;
+  position: absolute;
+  right: 50%;
+  bottom: -50dvh;
+  transform: translate(50%, 0);
+  padding: 0 0 0.8rem;
   font-family: var(--font-paragraphs);
-  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
-  color: var(--map-text-color);
+  font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+  color: var(--map-line-color);
   text-decoration: none;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
 }
 
 .about-web-link:hover {
-  opacity: 0.85;
+  opacity: 1;
 }
 
 .about-web-link:focus-visible {
-  outline: 2px solid var(--map-text-color);
+  outline: 2px solid var(--map-line-color);
   outline-offset: 3px;
 }
 

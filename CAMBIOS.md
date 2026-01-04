@@ -133,6 +133,184 @@ if (stored) {
 
 ---
 
-**Versión**: 2.0  
-**Fecha**: Diciembre 2024  
+## Actualización - 31 de Diciembre de 2024
+
+### 🐞 Correcciones críticas del formatter
+
+#### 1. **Sangría ahora carga correctamente desde data.json**
+
+**Problema**: El control de sangría mostraba 0% aunque en `data.json` el valor era 30.
+
+**Causa**: La línea 1641 usaba `block.sangria || 0`, lo que convertía valores numéricos válidos a 0 cuando eran falsy.
+
+**Solución**: Cambiado a `block.sangria !== undefined && block.sangria !== null ? block.sangria : 0`
+
+```javascript
+// Antes
+this.createIndentControl(
+  block.sangria || 0,
+  (value) => this.updateBlockIndent(sectionIndex, blockIndex, value)
+)
+
+// Después
+this.createIndentControl(
+  block.sangria !== undefined && block.sangria !== null ? block.sangria : 0,
+  (value) => this.updateBlockIndent(sectionIndex, blockIndex, value)
+)
+```
+
+**Resultado**: ✅ Los valores de sangría (0, 20, 30, etc.) ahora se cargan correctamente del data.json
+
+---
+
+### ✨ Nueva funcionalidad: Botón de enlaces
+
+#### 2. **Botón 🔗 para añadir links en párrafos**
+
+**Funcionalidad**: Nuevo botón en cada párrafo que permite convertir texto seleccionado en un enlace HTML.
+
+**Ubicación**: Antes de los botones ↑↓ y 🗑️ en cada párrafo.
+
+**Cómo funciona**:
+1. Seleccionar texto en el textarea del párrafo
+2. Hacer clic en el botón 🔗
+3. Introducir la URL en el prompt
+4. El texto seleccionado se envuelve en `<a href="URL" target="_blank">texto</a>`
+
+**Validaciones**:
+- ⚠️ Alerta si no hay texto seleccionado
+- ⚠️ Cancelación si no se introduce URL
+
+**Código añadido**:
+```javascript
+addLinkToParagraph(sectionIndex, blockIndex, pIndex, textarea) {
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const selectedText = textarea.value.substring(start, end);
+
+  if (!selectedText || selectedText.trim() === '') {
+    alert('⚠️ Por favor, selecciona el texto al que quieres añadir un enlace.');
+    return;
+  }
+
+  const url = prompt('🔗 Introduce la URL del enlace:', 'https://');
+  if (!url || url.trim() === '' || url === 'https://') {
+    return;
+  }
+
+  const link = `<a href="${url.trim()}" target="_blank">${selectedText}</a>`;
+  const newValue = textarea.value.substring(0, start) + link + textarea.value.substring(end);
+  textarea.value = newValue;
+  this.updateParagraph(sectionIndex, blockIndex, pIndex, newValue);
+  
+  const newCursorPos = start + link.length;
+  textarea.setSelectionRange(newCursorPos, newCursorPos);
+  textarea.focus();
+}
+```
+
+**Resultado**: ✅ Ahora es fácil añadir enlaces HTML directamente desde el formatter
+
+---
+
+### 🎨 Mejoras visuales
+
+#### 3. **Logo de Safe Amorx reemplaza al botón "home"**
+
+**Cambio**: El enlace de texto "← home" ahora es el logo de Safe Amorx.
+
+**Archivos modificados**:
+- `about.html`
+- `booking.html`
+- `collabs.html`
+- `training.html`
+
+**HTML antes**:
+```html
+<a href="index.html" class="back-link">home</a>
+```
+
+**HTML después**:
+```html
+<a href="index.html" class="back-link">
+    <img src="assets/logos/safeAmorx_logo_negro.webp" alt="Safe Amorx" class="back-link-logo">
+</a>
+```
+
+**CSS añadido**:
+```css
+.back-link-logo {
+  max-width: 180px;
+  max-height: 80px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+}
+
+.back-link {
+  padding: 0 0 2rem; /* Más espaciado */
+  /* ... resto de estilos ... */
+}
+```
+
+**Resultado**: ✅ Logo más grande, más espaciado, más visible
+
+---
+
+#### 4. **Enlace "web:meowrhino" reposicionado y estilizado**
+
+**Cambios**:
+- 📍 Solo aparece en `about.html`
+- 📍 Posicionado abajo a la derecha (debajo del logo home)
+- 🖊 Tamaño reducido: `clamp(0.75rem, 1.8vw, 0.95rem)`
+- 🎨 Color gris del mapa: `var(--map-line-color)` (#444)
+- ❌ Sin subrayado
+- 🔅 Opacidad 0.8, hover a 1.0
+
+**CSS antes**:
+```css
+.about-web-link {
+  margin-top: 2.6rem;
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  color: var(--map-text-color); /* Verde */
+  /* ... */
+}
+```
+
+**CSS después**:
+```css
+.about-web-link {
+  position: absolute;
+  right: 50%;
+  bottom: -50dvh;
+  transform: translate(50%, 0);
+  padding: 0 0 0.8rem;
+  font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+  color: var(--map-line-color); /* Gris #444 */
+  text-decoration: none;
+  opacity: 0.8;
+  /* ... */
+}
+```
+
+**Resultado**: ✅ Enlace discreto, pequeño, gris, sin subrayado, abajo a la derecha
+
+---
+
+### 📝 Resumen de archivos modificados
+
+| Archivo | Cambios |
+|---------|--------|
+| `formatter.html` | Corrección de sangría + botón de links |
+| `about.html` | Logo home + enlace web reposicionado |
+| `booking.html` | Logo home |
+| `collabs.html` | Logo home |
+| `training.html` | Logo home |
+| `css/styles.css` | Estilos para logo y enlace web |
+
+---
+
+**Versión**: 2.1  
+**Fecha**: 31 de Diciembre de 2024  
 **Autor**: Manus AI

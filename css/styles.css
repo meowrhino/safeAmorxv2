@@ -69,8 +69,8 @@ body.lightbox-open {
 
   /* Colores del mapa (home) */
   --map-text-color: #ffffff;
-  --map-line-color: #666666;
-  --map-stroke: 3px;
+  --map-line-color: #ffffff;
+  --map-stroke: 2px;
 
   /* Colores comerciales */
   --color-accent: #00ff88;
@@ -94,7 +94,7 @@ body.lightbox-open {
   left: 0;
   width: 100%;
   z-index: 1000;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
   padding: 1.5rem 3rem;
   display: flex;
   justify-content: space-between;
@@ -103,7 +103,7 @@ body.lightbox-open {
 }
 
 .main-header.scrolled {
-  background: rgba(0, 0, 0, 0.95);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
   backdrop-filter: blur(10px);
 }
 
@@ -254,10 +254,11 @@ body.lightbox-open {
 .photo-gallery img {
   flex-shrink: 0;
   width: auto;
-  height: 100%;
+  height: 60%;
   object-fit: cover;
   opacity: 0.6;
   transition: opacity 0.3s ease;
+  margin: 0 1rem;
 }
 
 .photo-gallery img:hover {
@@ -468,11 +469,8 @@ body:not(.home-page)::before {
 .content-section {
   max-width: 900px;
   margin: 0 auto;
-  padding: 3rem;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  padding: 0;
+  background: transparent;
 }
 
 .content-section h1 {
@@ -480,9 +478,14 @@ body:not(.home-page)::before {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
   color: var(--color-text-primary);
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .content-section h2 {
@@ -491,8 +494,15 @@ body:not(.home-page)::before {
   font-weight: 600;
   color: var(--color-text-primary);
   margin-top: 3rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   text-transform: uppercase;
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
 .content-section h3 {
@@ -501,15 +511,27 @@ body:not(.home-page)::before {
   font-weight: 600;
   color: var(--color-accent);
   margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 2rem;
+  background: rgba(0, 255, 136, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  border-left: 4px solid var(--color-accent);
 }
 
 .content-section p {
   font-family: var(--font-paragraphs);
   font-size: 1.1rem;
   line-height: 1.8;
-  color: var(--color-text-secondary);
-  margin-bottom: 1.5rem;
+  color: var(--color-text-primary);
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
 }
 
 .content-section p + p {
@@ -604,26 +626,59 @@ body:not(.home-page)::before {
    ============================================================================ */
 
 .main-footer {
-  background: rgba(0, 0, 0, 0.95);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
   padding: 2rem 3rem;
   text-align: center;
-  color: var(--color-text-secondary);
-  font-family: var(--font-paragraphs);
-  font-size: 0.9rem;
+  color: var(--color-text-primary);
+  font-family: var(--font-headings);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .main-footer a {
-  color: var(--color-accent);
+  color: var(--color-text-primary);
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  display: inline-block;
 }
 
 .main-footer a:hover {
-  color: #00ffaa;
+  color: var(--color-accent);
+  transform: translateY(-2px);
 }
 
 /* ============================================================================
-   13. UTILIDADES
+   13. ABOUT PAGE - BLOQUES CON IMÁGENES
+   ============================================================================ */
+
+/* Solo para la página about: añadir imágenes de fondo a los h2 */
+body[data-category="about"] .content-section h2 {
+  background-image: url('../assets/images/party/party1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+body[data-category="about"] .content-section h2:nth-of-type(2) {
+  background-image: url('../assets/images/party/party3.jpg');
+}
+
+body[data-category="about"] .content-section h2:nth-of-type(3) {
+  background-image: url('../assets/images/party/party5.jpg');
+}
+
+body[data-category="about"] .content-section h2:nth-of-type(4) {
+  background-image: url('../assets/images/party/party7.jpg');
+}
+
+body[data-category="about"] .content-section h2:nth-of-type(5) {
+  background-image: url('../assets/images/party/party9.jpg');
+}
+
+/* ============================================================================
+   14. UTILIDADES
    ============================================================================ */
 
 .text-center {

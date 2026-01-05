@@ -28,7 +28,7 @@
             "Estamos allí para cuidar a la gente, prevenir y mediar en conflictos y crear conciencia sobre códigos de conducta y la responsabilidad colectiva. Creemos en una transformación de la cultura club española, donde la pista es el espacio donde se comparten el amor por la música y el baile."
           ],
           "desplegable": false,
-          "sangria": 20
+          "sangria": 30
         }
       ],
       "imagenes": [],
@@ -38,16 +38,9 @@
       "titulo": "En qué creemos",
       "bloques": [
         {
-          "subtitulo": "Riesgo y placer en equilibrio.",
+          "subtitulo": "Riesgo y placer en equilibrio",
           "texto": [
-            "La fiesta es un espacio donde el placer y la experimentación van de la mano con cierta vulnerabilidad. El riesgo existe y forma parte de la noche. Nuestro trabajo es acompañar para que ese riesgo sea elegido, informado y gestionable—no impuesto ni invisibilizado. Estamos allí como red de apoyo cuando el riesgo se manifiesta, y como fuente de información para prevenirlo."
-          ],
-          "desplegable": true,
-          "sangria": 0
-        },
-        {
-          "subtitulo": "Club como cultura y espacio de transformación",
-          "texto": [
+            "La fiesta es un espacio donde el placer y la experimentación van de la mano con cierta vulnerabilidad. El riesgo existe y forma parte de la noche. Nuestro trabajo es acompañar para que ese riesgo sea elegido, informado y gestionable—no impuesto ni invisibilizado. Estamos allí como red de apoyo cuando el riesgo se manifiesta, y como fuente de información para prevenirlo.",
             "El Club es un espacio cultural de valor, donde se generan experiencias transformadoras únicas. Queremos defenderlo."
           ],
           "desplegable": true,
@@ -56,55 +49,17 @@
         {
           "subtitulo": "Pedagogía preventiva",
           "texto": [
-            "En el hosting explicamos por qué ciertas actitudes no son bienvenidas. En sala, conversamos con quien necesita un recordatorio. Creemos que la concienciación y corresponsabilidad pueden transformar el espacio de fiesta."
+            "En el hosting explicamos por qué ciertas actitudes no son bienvenidas. En sala, conversamos con quien necesita un recordatorio. Creemos que la concienciación y corresponsabilidad pueden transformar el espacio de fiesta. Toda la comunidad del espacio—público, organizadores, trabajadores—somos responsables del ambiente que creamos."
           ],
           "desplegable": true,
           "sangria": 0
         },
         {
-          "subtitulo": "Acompañamiento sin juicio.",
+          "subtitulo": "Acompañamiento sin juicio",
           "texto": [
             "Queremos entender lo que sucede, no venimos a moralizar. Aún así, tenemos muy claro que las violencias no son bienvenidas y las tratamos con determinación."
           ],
           "desplegable": true,
-          "sangria": 0
-        },
-        {
-          "subtitulo": "Corresponsabilidad colectiva",
-          "texto": [
-            "Toda la comunidad del espacio—público, organizadores, trabajadores—somos responsables del ambiente que creamos."
-          ],
-          "desplegable": true,
-          "sangria": 0
-        }
-      ],
-      "imagenes": [],
-      "logos": []
-    },
-    {
-      "titulo": "Cita McKenzie Wark",
-      "bloques": [
-        {
-          "subtitulo": "",
-          "texto": [
-            "\"To rave, to rove, to rêve.\" - McKenzie Wark"
-          ],
-          "desplegable": false,
-          "sangria": 0
-        }
-      ],
-      "imagenes": [],
-      "logos": []
-    },
-    {
-      "titulo": "Cierre reflexivo",
-      "bloques": [
-        {
-          "subtitulo": "",
-          "texto": [
-            "No nos interesa ir rápido. Nos interesa hacer las cosas con atención al detalle, entendiendo cómo somos, cómo bailamos y cómo nos relacionamos, y disfrutando del camino."
-          ],
-          "desplegable": false,
           "sangria": 0
         }
       ],
@@ -153,7 +108,7 @@
           "texto": [
             "Una persona en la entrada da la bienvenida, explica el código de conducta de la fiesta y visibiliza la red de acogida disponible. Funciona como primer punto de concienciación antes de entrar a la sala."
           ],
-          "desplegable": false,
+          "desplegable": true,
           "sangria": 0
         },
         {
@@ -163,7 +118,7 @@
             "Detectan situaciones de riesgo, generan vínculos con el público, conocen las dinámicas de la sala.",
             "Una persona coordina al equipo durante la noche, mantiene contacto con seguridad y gestión del evento, y determina el mejor curso de acción en situaciones intensas."
           ],
-          "desplegable": false,
+          "desplegable": true,
           "sangria": 0
         },
         {
@@ -172,7 +127,7 @@
             "Traemos flyers informativos y colgamos carteles por toda la sala. Los materiales comunican cómo identificar al equipo (pulseras rosas luminosas), dónde encontrarnos, y transmiten los códigos de conducta del evento: respeto, corresponsabilidad, inclusión y consciencia. También incluyen mensajes específicos sobre el uso del espacio y las interacciones.",
             "Esta comunicación visual complementa nuestro trabajo en sala, ofreciendo un servicio 360 donde el público puede acceder a la información tanto a través de nosotras como de forma autónoma."
           ],
-          "desplegable": false,
+          "desplegable": true,
           "sangria": 0
         },
         {
@@ -181,7 +136,7 @@
             "Registramos cada intervención para identificar patrones, anticipar situaciones y afinar continuamente nuestros protocolos. Esto nos permite entender las necesidades de cada fiesta y público y adaptarnos a ellas. En un futuro también nos permitirá hacer valoraciones del impacto de nuestro trabajo sobre los clubs, colectivos y festivales con los que colaboramos.",
             "En Safe Amorx estamos en evolución constante. Creemos en una construcción colectiva; escuchamos las valoraciones de nuestros colaboradores, de nuestro equipo y del público."
           ],
-          "desplegable": false,
+          "desplegable": true,
           "sangria": 0
         }
       ],
@@ -196,7 +151,7 @@
           "texto": [
             "Awareness para una o varias noches. Traemos nuestro protocolo estándar (adaptado a vuestro código de conducta), materiales propios (flyers y carteles), información previa para vuestro equipo, y después del evento os enviamos un informe de valoración."
           ],
-          "desplegable": false,
+          "desplegable": true,
           "sangria": 0
         },
         {
@@ -204,7 +159,7 @@
           "texto": [
             "Aseguramos un equipo fijo para vuestros eventos regulares que conozca bien el espacio y la comunidad. Construimos un protocolo personalizado mediante jornadas de prueba, análisis de datos del club/festival y encuestas a público y trabajadores. Este protocolo se adapta a vuestras necesidades y está en constante evolución. Ofrecemos también una capacitación a vuestro equipo (seguridad, staff) en los protocolos de awareness."
           ],
-          "desplegable": false,
+          "desplegable": true,
           "sangria": 0
         }
       ],
@@ -233,9 +188,9 @@
         {
           "subtitulo": "",
           "texto": [
-            "• Escribidnos un email con información sobre vuestro evento: nombre, fecha, tipo de evento, cantidad de público esperada, detalles del espacio.",
-            "• Os enviamos una propuesta de colaboración, con un presupuesto adaptado a vuestro colectivo, club o festival. En caso de colaboraciones más perduraderas, planeamos una reunión.",
-            "• Después del evento, enviamos un informe de valoración y se puede planear una reunión de feedback."
+            "Escribidnos un email con información sobre vuestro evento: nombre, fecha, tipo de evento, cantidad de público esperada, detalles del espacio.",
+            "Os enviamos una propuesta de colaboración, con un presupuesto adaptado a vuestro colectivo, club o festival. En caso de colaboraciones más perduraderas, planeamos una reunión.",
+            "Después del evento, enviamos un informe de valoración y se puede planear una reunión de feedback."
           ],
           "desplegable": false,
           "sangria": 0
@@ -281,22 +236,6 @@
       "titulo": "Razzmatazz",
       "bloques": [
         {
-          "subtitulo": "",
-          "texto": [
-            "Lo que comenzó con TORAX en junio de 2024 evolucionó hacia el (RESPECT), un proyecto integral de awareness para el club más grande de Barcelona.",
-            "INSERTAR LOGOS; CARTELES; FLYERS, FOTOS DEL EQUIPO"
-          ],
-          "desplegable": false,
-          "sangria": 0
-        }
-      ],
-      "imagenes": [],
-      "logos": []
-    },
-    {
-      "titulo": "TORAX (Junio 2024 - presente)",
-      "bloques": [
-        {
           "subtitulo": "TORAX (Junio 2024 - presente)",
           "texto": [
             "Donde arrancó todo. TORAX es una fiesta emblemática que se celebra en Razzmatazz. Esta colaboración marcó el inicio de una relación que transformaría nuestra forma de trabajar en venues grandes.",
@@ -304,14 +243,7 @@
           ],
           "desplegable": false,
           "sangria": 0
-        }
-      ],
-      "imagenes": [],
-      "logos": []
-    },
-    {
-      "titulo": "(RESPECT) - Protocolo Integral (Octubre 2025 - presente)",
-      "bloques": [
+        },
         {
           "subtitulo": "(RESPECT) - Protocolo Integral (Octubre 2025 - presente)",
           "texto": [
@@ -332,8 +264,7 @@
           "subtitulo": "",
           "texto": [
             "Me Siento Extraña es el colectivo FLINTA* con quien nació nuestro proyecto. Esta colaboración representa nuestros valores fundacionales y el compromiso con espacios seguros centrados en la comunidad queer.",
-            "Servicios: Protocolo adaptado que respeta y refuerza la centralidad FLINTA del espacio, equipo de awareness para hosting e itinerancia.",
-            "INSERTAR LOGOS; CARTELES; FLYERS, FOTOS DEL EQUIPO"
+            "Servicios: Protocolo adaptado que respeta y refuerza la centralidad FLINTA del espacio, equipo de awareness para hosting e itinerancia."
           ],
           "desplegable": false,
           "sangria": 0
@@ -349,8 +280,7 @@
           "subtitulo": "",
           "texto": [
             "Desde febrero de 2024, colaboramos con el CCCB (Centre de Cultura Contemporània de Barcelona) en las fiestas <3OR (TRESOR), llevando nuestro enfoque de awareness a una fiesta en el contexto de centro cultural.",
-            "Servicios: Protocolo adaptado al contexto cultural, equipo de awareness para hosting e itinerancia.",
-            "INSERTAR LOGOS; CARTELES; FLYERS, FOTOS DEL EQUIPO"
+            "Servicios: Protocolo adaptado al contexto cultural, equipo de awareness para hosting e itinerancia."
           ],
           "desplegable": false,
           "sangria": 0
@@ -365,8 +295,7 @@
         {
           "subtitulo": "",
           "texto": [
-            "Hemos trabajado también con otros colectivos y espacios que forman parte del tejido cultural de Barcelona:",
-            "INSERTAR LOGOS"
+            "Hemos trabajado también con otros colectivos y espacios que forman parte del tejido cultural de Barcelona:"
           ],
           "desplegable": false,
           "sangria": 0

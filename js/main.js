@@ -459,7 +459,7 @@
     }
 
     async function setupGrid() {
-        if (!document.getElementById('gridContainer')) return;
+        if (!document.getElementById('mapContainer')) return;
 
         sections = await loadSections();
         initGrid();

@@ -568,8 +568,10 @@
         const sections = Array.isArray(contentArray) ? contentArray : [];
 
         if (sections.length === 0) {
+            document.body.classList.add('empty-page');
             fragment.appendChild(createPlaceholderSection());
         } else {
+            document.body.classList.remove('empty-page');
             sections.forEach((section, index) => {
                 const sectionElement = createSection(section, index);
                 fragment.appendChild(sectionElement);
@@ -595,15 +597,12 @@
         }
     }
 
-    // Crea sección vacía para mostrar "proximamente".
+    // Crea sección vacía para mostrar "PRÓXIMAMENTE".
     function createPlaceholderSection() {
-        const sectionDiv = document.createElement('div');
-        sectionDiv.className = 'content-section';
-        sectionDiv.classList.add('is-empty');
-        const p = document.createElement('p');
-        p.textContent = 'proximamente';
-        sectionDiv.appendChild(p);
-        return sectionDiv;
+        const wrapper = document.createElement('div');
+        wrapper.className = 'empty-page-message';
+        wrapper.textContent = 'PRÓXIMAMENTE';
+        return wrapper;
     }
 
     function normalizeBlocks(section) {

@@ -1,0 +1,103 @@
+/* ============================================================================
+   FORMATTER EXTENSIONS - Estilos para tipos de párrafo y validación
+   ============================================================================ */
+
+/* Selector de tipo de párrafo */
+.paragraph-type-selector {
+  margin-bottom: 1.5rem;
+}
+
+.type-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.type-button {
+  min-height: 60px;
+  border: 2px solid transparent;
+  font-family: inherit;
+}
+
+.type-button:hover {
+  transform: scale(1.02) !important;
+  opacity: 0.9;
+}
+
+.type-button.active {
+  border-color: #00ff88 !important;
+}
+
+/* Input de imagen con preview */
+.image-input-group {
+  margin-bottom: 1.5rem;
+}
+
+.image-input-wrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.image-input {
+  flex: 1;
+}
+
+.image-input.valid {
+  border-color: #00ff88;
+  background-color: rgba(0, 255, 136, 0.05);
+}
+
+.image-input.invalid {
+  border-color: #ff4444;
+  background-color: rgba(255, 68, 68, 0.05);
+}
+
+.image-preview {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-status {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 1.2rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .type-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .image-input-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .image-preview {
+    width: 100%;
+    height: 120px;
+  }
+}

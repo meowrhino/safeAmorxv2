@@ -38,7 +38,7 @@ html {
 }
 
 body {
-  font-family: "Work Sans", Helvetica, Arial, sans-serif;
+  font-family: "Roboto Condensed", Helvetica, Arial, sans-serif;
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
@@ -64,8 +64,8 @@ body.lightbox-open {
 
 :root {
   /* Fuentes */
-  --font-headings: "Roboto Condensed", sans-serif;
-  --font-paragraphs: "Work Sans", sans-serif;
+  --font-headings: "BBH Bogle", sans-serif;
+  --font-paragraphs: "Roboto Condensed", sans-serif;
   --font-map: "BBH Bogle", sans-serif;
 
   /* Colores de texto */
@@ -536,19 +536,70 @@ body.content-page .content-wrapper {
   min-height: 0;
 }
 
+/* Base para todas las content-section */
 .content-section {
   max-width: 900px;
-  margin: 0 auto;
+  margin: 0 auto 3rem auto;
   padding: 3rem;
+  border-radius: 12px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.content-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* TIPO 1: Glass blanco básico (default) */
+.content-section,
+.content-section.type-1 {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
-  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-.content-section + .content-section {
-  margin-top: 3rem;
+/* TIPO 2: Glass negro */
+.content-section.type-2 {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* TIPO 3: Con imagen de fondo + glass */
+.content-section.type-3 {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* TIPO 4: Glass verde destacado */
+.content-section.type-4 {
+  background: rgba(0, 255, 136, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+}
+
+/* TIPO 5: Con imagen sin glass */
+.content-section.type-5 {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: multiply;
+  backdrop-filter: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
 }
 
 .content-section h1 {
@@ -744,7 +795,64 @@ body.content-page .content-wrapper {
 }
 
 /* ============================================================================
-   12. FOOTER
+   12. PÁGINAS VACÍAS (PRÓXIMAMENTE)
+   ============================================================================ */
+
+.empty-page .content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 100px);
+}
+
+.empty-page-message {
+  text-align: center;
+  font-family: var(--font-headings);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  letter-spacing: 0.1em;
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.8;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* ============================================================================
+   13. SECCIÓN HEADER CON 30DVH AIRE
+   ============================================================================ */
+
+.page-section-header {
+  height: 30dvh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0 3rem 2rem 3rem;
+  margin-bottom: 3rem;
+}
+
+.page-section-title {
+  font-family: var(--font-headings);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  letter-spacing: 0.05em;
+  text-align: right;
+  margin: 0;
+}
+
+/* ============================================================================
+   14. FOOTER
    ============================================================================ */
 
 .main-footer {

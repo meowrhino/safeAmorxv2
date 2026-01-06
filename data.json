@@ -20,6 +20,7 @@
     },
     {
       "titulo": "Qué hacemos",
+      "paragraphType": "type-2",
       "bloques": [
         {
           "subtitulo": "",
@@ -36,6 +37,8 @@
     },
     {
       "titulo": "En qué creemos",
+      "paragraphType": "type-3",
+      "paragraphImage": "assets/images/party/party3.jpg",
       "bloques": [
         {
           "subtitulo": "Riesgo y placer en equilibrio",
@@ -234,6 +237,7 @@
     },
     {
       "titulo": "Razzmatazz",
+      "paragraphType": "type-4",
       "bloques": [
         {
           "subtitulo": "TORAX (Junio 2024 - presente)",
@@ -259,6 +263,8 @@
     },
     {
       "titulo": "Me Siento Extraña",
+      "paragraphType": "type-5",
+      "paragraphImage": "assets/images/party/party7.jpg",
       "bloques": [
         {
           "subtitulo": "",

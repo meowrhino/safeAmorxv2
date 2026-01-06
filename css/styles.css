@@ -291,12 +291,12 @@ body.lightbox-open {
   z-index: 0;
 }
 
-/* Degradado de negro abajo a transparente arriba */
+/* Degradado de negro abajo a transparente arriba (invertido para compensar scaleY) */
 .transition-section::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
   z-index: 1;
 }
 

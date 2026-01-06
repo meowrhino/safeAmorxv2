@@ -766,6 +766,17 @@
         const sectionDiv = document.createElement('div');
         sectionDiv.className = 'content-section';
         sectionDiv.setAttribute('data-section-index', index);
+        
+        // Añadir clase de tipo de párrafo si existe
+        if (section.paragraphType) {
+            sectionDiv.classList.add(section.paragraphType);
+        }
+        
+        // Añadir imagen de fondo si existe
+        if (section.paragraphImage) {
+            sectionDiv.style.backgroundImage = `url(${section.paragraphImage})`;
+        }
+        
         let hasContent = false;
 
         if (section.titulo) {

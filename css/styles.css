@@ -265,7 +265,7 @@ body.lightbox-open {
 }
 
 /* ============================================================================
-   6. TRANSICIÓN (30DVH) - IMAGEN INVERTIDA CON DEGRADADO
+   6. TRANSICIÓN (30DVH) - IMAGEN INVERTIDA + GALERÍA
    ============================================================================ */
 
 .transition-section {
@@ -282,13 +282,52 @@ body.lightbox-open {
   transform: scaleY(-1);
 }
 
-/* Degradado hacia negro */
+/* Degradado hacia negro (debajo de la galería) */
 .transition-section::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
   z-index: 1;
+}
+
+/* Galería de fotos encima */
+.photo-gallery {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 2rem;
+  animation: slideGallery 40s linear infinite;
+  z-index: 2;
+  /* Invertir galería para que se vea bien sobre fondo invertido */
+  transform: scaleY(-1);
+}
+
+.photo-gallery img {
+  flex-shrink: 0;
+  width: auto;
+  height: 60%;
+  object-fit: cover;
+  border-radius: 8px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.photo-gallery img:hover {
+  opacity: 1;
+}
+
+@keyframes slideGallery {
+  0% {
+    transform: translateX(0) scaleY(-1);
+  }
+  100% {
+    transform: translateX(-50%) scaleY(-1);
+  }
 }
 
 /* ============================================================================

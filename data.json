@@ -37,8 +37,6 @@
     },
     {
       "titulo": "En qué creemos",
-      "paragraphType": "type-3",
-      "paragraphImage": "assets/images/party/party3.jpg",
       "bloques": [
         {
           "subtitulo": "Riesgo y placer en equilibrio",
@@ -263,8 +261,6 @@
     },
     {
       "titulo": "Me Siento Extraña",
-      "paragraphType": "type-5",
-      "paragraphImage": "assets/images/party/party7.jpg",
       "bloques": [
         {
           "subtitulo": "",

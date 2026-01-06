@@ -228,8 +228,10 @@ body.lightbox-open {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+  background: linear-gradient(180deg, 
+    rgba(0, 0, 0, 0.3) 0%, 
+    rgba(0, 0, 0, 0.3) 80%, 
+    rgba(0, 0, 0, 1) 100%);
 }
 
 @keyframes heroZoom {
@@ -264,83 +266,48 @@ body.lightbox-open {
   }
 }
 
-/* ============================================================================
-   6. TRANSICIÓN (30DVH) - IMAGEN INVERTIDA + GALERÍA
-   ============================================================================ */
-
-.transition-section {
-  position: relative;
-  width: 100%;
-  height: 30dvh;
-  overflow: hidden;
-  z-index: 0;
-  background-image: url("../assets/images/background.webp");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  /* Invertir imagen en eje Y (verticalmente) */
-  transform: scaleY(-1);
-}
-
-/* Velo oscuro (igual que hero) */
-.transition-section::before {
-  content: "";
+/* Galería en el 20% inferior del hero */
+.hero-gallery {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
-  z-index: 0;
-}
-
-/* Degradado de negro abajo a transparente arriba (invertido para compensar scaleY) */
-.transition-section::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-  z-index: 1;
-}
-
-/* Galería de fotos encima */
-.photo-gallery {
-  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20%;
   display: flex;
-  width: 100%;
-  height: 100%;
   align-items: center;
   gap: 2rem;
   padding: 0 2rem;
+  overflow: hidden;
+  z-index: 15;
   animation: slideGallery 40s linear infinite;
-  z-index: 2;
-  /* Invertir galería para que se vea bien sobre fondo invertido */
-  transform: scaleY(-1);
 }
 
-.photo-gallery img {
+.hero-gallery img {
   flex-shrink: 0;
   width: auto;
-  height: 60%;
+  height: 80%;
   object-fit: cover;
   border-radius: 8px;
-  opacity: 0.6;
+  opacity: 0.7;
   transition: opacity 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-.photo-gallery img:hover {
+.hero-gallery img:hover {
   opacity: 1;
 }
 
 @keyframes slideGallery {
   0% {
-    transform: translateX(0) scaleY(-1);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%) scaleY(-1);
+    transform: translateX(-50%);
   }
 }
 
 /* ============================================================================
-   7. MAPA SECTION (70DVH) - GRID CUADRADA
+   6. MAPA SECTION (70DVH) - GRID CUADRADA
    ============================================================================ */
 
 .map-section {

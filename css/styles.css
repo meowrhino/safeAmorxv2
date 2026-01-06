@@ -543,12 +543,18 @@ body.content-page .content-wrapper {
   padding: 3rem;
   border-radius: 12px;
   position: relative;
-  opacity: 0;
-  transform: translateY(30px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.content-section.visible {
+/* Animaciones de scroll (solo si JS está activo) */
+.content-section.scroll-animate {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.content-section.scroll-animate.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -807,7 +813,7 @@ body.content-page .content-wrapper {
 
 .empty-page-message {
   text-align: center;
-  font-family: var(--font-headings);
+  font-family: var(--font-paragraphs);
   font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 700;
   text-transform: uppercase;

@@ -54,8 +54,9 @@
             threshold: 0.1 // 10% del elemento debe estar visible
         });
 
-        // Observar todas las secciones
+        // Añadir clase scroll-animate y observar todas las secciones
         sections.forEach(section => {
+            section.classList.add('scroll-animate');
             observer.observe(section);
         });
 

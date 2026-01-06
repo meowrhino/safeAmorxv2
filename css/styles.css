@@ -282,12 +282,21 @@ body.lightbox-open {
   transform: scaleY(-1);
 }
 
-/* Degradado hacia negro (debajo de la galería) */
+/* Velo oscuro (igual que hero) */
+.transition-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+  z-index: 0;
+}
+
+/* Degradado de negro abajo a transparente arriba */
 .transition-section::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
   z-index: 1;
 }
 

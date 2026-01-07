@@ -87,6 +87,13 @@ body.lightbox-open {
   --spacing-section: 6rem;
   --spacing-paragraph: 1.1rem;
   --spacing-paragraph-break: 2rem;
+
+  /* Layout home */
+  --gallery-height: 20dvh;
+  --hero-height: calc(100dvh - var(--gallery-height));
+
+  /* Content width */
+  --content-max-width: 900px;
 }
 
 /* ============================================================================
@@ -200,13 +207,13 @@ body.lightbox-open {
 }
 
 /* ============================================================================
-   5. HERO SECTION (70DVH)
+   5. HERO SECTION (HERO + GALLERY = 100DVH)
    ============================================================================ */
 
 .hero-section {
   position: relative;
   width: 100%;
-  height: 100dvh;
+  height: var(--hero-height);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -270,7 +277,7 @@ body.lightbox-open {
 .gallery-section {
   position: relative;
   width: 100%;
-  height: 20dvh;
+  height: var(--gallery-height);
   overflow: hidden;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
   z-index: 5;
@@ -508,7 +515,7 @@ body.content-page .content-wrapper {
 
 /* Base para todas las content-section */
 .content-section {
-  max-width: 900px;
+  max-width: var(--content-max-width);
   margin: 0 auto 3rem auto;
   padding: 3rem;
   border-radius: 12px;
@@ -751,6 +758,10 @@ body.content-page .content-wrapper {
     padding: 2rem 1.5rem;
   }
 
+  .page-section-header {
+    padding: 0 1.5rem 2rem 1.5rem;
+  }
+
   .content-section + .content-section {
     margin-top: 2rem;
   }
@@ -812,8 +823,10 @@ body.content-page .content-wrapper {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto 3rem auto;
   padding: 0 3rem 2rem 3rem;
-  margin-bottom: 3rem;
 }
 
 .page-section-title {
